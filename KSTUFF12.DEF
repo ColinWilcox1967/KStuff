@@ -1,0 +1,56 @@
+CR                      equ     0Dh
+LF                      equ     0Ah
+
+PAUSE_CHAR              equ     '^'
+ZFLAG_SET               equ     0000000001000000b
+ZFLAG_RESET             equ     1111111110111111b
+
+MAX_BUFFER_SIZE         equ     4096
+
+DOS_GET_DIR             equ     47h
+DOS_SET_DIR             equ     3Bh
+
+TIMER                   equ     8h
+
+VIDEO                   equ     10h
+VIDEO_GET_MODE          equ     0Fh
+
+KEY                     equ     16h
+KEY_READ_CHAR           equ     0h
+KEY_GET_STATUS          equ     1h
+KEY_GET_FLAGS           equ     2h
+KEY_PUSH_CHAR           equ     5h
+KEY_EREAD_CHAR          equ     10h
+KEY_EGET_STATUS         equ     11h
+
+DOS_SET_VECTOR          equ     2500h
+DOS_GET_VECTOR          equ     3500h
+DOS_KEEP                equ     3100h
+DOS_TERMINATE           equ     4C00h
+DOS_OPEN_FILE           equ     3Dh
+DOS_READ_FILE           equ     3Fh
+DOS_CLOSE_FILE          equ     3Eh
+
+DOSINT                  MACRO
+                        int     21h
+                        ENDM
+
+KEYINT                  MACRO
+                        int     16h
+                        ENDM
+
+VIDEOINT                MACRO
+                        int     10h
+                        ENDM
+
+PRINT_STRING            MACRO string
+                        push    ax
+                        push    dx
+                        mov     ah, 9
+                        mov     dx, offset cs:string
+                        int     21h
+                        pop     dx
+                        pop     ax
+                        ENDM
+
+
